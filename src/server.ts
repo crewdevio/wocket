@@ -162,7 +162,7 @@ export class Server extends EventEmitter {
             await this.transmitter.handlePacket(
               new Packet(
                 client,
-                "connect",
+                `{ "connect": true }`,
               ),
             );
             for await (const message of socket) {
@@ -179,7 +179,7 @@ export class Server extends EventEmitter {
                 await this.transmitter.handlePacket(
                   new Packet(
                     client,
-                    "disconnect",
+                    `{ "disconnect": true }`,
                   ),
                 );
                 super.removeClient(client.id);
@@ -192,7 +192,7 @@ export class Server extends EventEmitter {
               await this.transmitter.handlePacket(
                 new Packet(
                   client,
-                  "disconnect",
+                  `{ "disconnect": true }`,
                 ),
               );
             }
@@ -233,13 +233,13 @@ export class Server extends EventEmitter {
   ): Promise<void> {
     switch (message) {
       case "id":
-        return client.socket.send(`Client ID: ${client.id}`);
+        return client.socket.send(`{ "data": "${client.id}" }`);
 
       case "ping":
-        return client.socket.send("pong");
+        return client.socket.send(`{ "data": "pong", "time": ${Date.now()} }`);
 
       case "pong":
-        return client.socket.send("ping");
+        return client.socket.send(`{ "data": "pong", "time": ${Date.now()} }`);
 
       case "test":
         return client.socket.send(

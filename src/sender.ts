@@ -84,7 +84,8 @@ export class Sender {
             // Send the message
             await socketConn.send(message);
           } catch (err) {
-            console.log(`Unable to send message to Client #${clientId}.`);
+            // remove from listeners
+            queueItem.channel.listeners.delete(clientId);
           }
         }
         this.ready = true;
