@@ -162,7 +162,7 @@ export class Server extends EventEmitter {
             await this.transmitter.handlePacket(
               new Packet(
                 client,
-                `{ "connect": true }`,
+                `connect`,
               ),
             );
             for await (const message of socket) {
@@ -179,7 +179,7 @@ export class Server extends EventEmitter {
                 await this.transmitter.handlePacket(
                   new Packet(
                     client,
-                    `{ "disconnect": true }`,
+                    `disconnect`,
                   ),
                 );
                 super.removeClient(client.id);
@@ -192,7 +192,7 @@ export class Server extends EventEmitter {
               await this.transmitter.handlePacket(
                 new Packet(
                   client,
-                  `{ "disconnect": true }`,
+                  `disconnect`,
                 ),
               );
             }
